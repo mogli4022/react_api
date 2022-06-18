@@ -7,10 +7,12 @@ function Form() {
         lastname:"",
         email:"",
         password:"",
-        gender:""
+        gender:"",
     })
+const [hobbies, setHobbies] = useState([])
+const [temp, setTemp] = useState([])
 
-    const [checked, setChecked] = useState(
+const [checked, setChecked] = useState(
         {
             Male:false,
             Female:false
@@ -19,34 +21,44 @@ function Form() {
 
     const handleChange = (e) => {
         const {name, value} = e.target
+        
        setFormData({
         ...formData,
         [name]:value
        })
     }
 
-    const radioChange = (e) => {
-        const {name, value} = e.target
-       setChecked({
-        ...checked,
-        [e.target.value]: true
-       })
+    // for radio
 
-       setFormData({
-        ...formData,
-        gender:value
-       })
+    const redioChange = (e) => {
+        const {name, value} =  e.target
+
+        console.log(value);
+       setChecked({value:true})
+
+        setFormData({
+            ...formData, 
+            gender: value
+        })
+    }
+
+    // for checkbox
+    const handleCheckBox = (e) => {
+        const {name, value} = e.target
+        temp.push(value)
+        setHobbies(temp)
     }
 
     const  handleSubmit = (e) =>  {
-
+        
+        console.log(hobbies);
         // set null fordata values
 
-        setChecked({
-            ...checked,
+       setChecked({
+        ...checked,
             Male:false,
             Female:false
-           })
+        })
 
         setFormData({
             ...formData, 
@@ -88,8 +100,20 @@ function Form() {
         
         <div className="input_div">
         <label className="label">Gender : </label>
-        <input type="radio" className="input" checked={checked.Male} name="gender" value={"Male"} onChange={radioChange} /> Male
-        <input type="radio" className="input" checked={checked.Female} name="gender" value={"Female"} onChange={radioChange} /> Female
+        <input type="radio" className="input" name="gender" checked={checked.Male}  value="Male" onClick={redioChange} /> Male
+        <input type="radio" className="input" name="gender" checked={checked.Female} value="Female" onClick={redioChange}/> Female
+        </div>
+
+        <div className="input_div">
+        <label className="label">Hobbies : </label>
+        <input type="checkbox" className="input" name="Sports" value="Sports" onChange={handleCheckBox} /> 
+        Sports
+        <input type="checkbox" className="input" name="Reading" value="Reading" onChange={handleCheckBox}/> 
+        Reading
+        <input type="checkbox" className="input" name="Travelling" value="Travelling"  onChange={handleCheckBox}/> 
+        Travelling
+        <input type="checkbox" className="input" name="Other" value="Other" onChange={handleCheckBox}/> 
+        Other...
         </div>
         
         <div className="input_div">
